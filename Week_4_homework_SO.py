@@ -97,20 +97,29 @@ balance (NOTE! The balance cannot be negative!)
 account, then you need to raise an error an exit the program. 
 
 """
-# Aware that import sys is required but this doesn't exist in the PyCharm packages available on my laptop
+# Aware that import sys is helpful to exit the code but this doesn't exist in the PyCharm packages available on my laptop
 import sys
 from sys import exit
 
-
+# Set the actual pin and count to 0
 real_pin = 1234
 count = 0
 
+
 def withdraw_money(account_balance):
+
+    # User says how much they want to withdraw
     amount = int(input('How much would you like to withdraw? (£) '))
+
+    # Raise an exception if they try to enter a negative amount
     if amount < 0:
         raise Exception
     try:
+        #Calculate the new balance based on the requested withdrawal amount
         new_balance = account_balance - amount
+
+        # If the new balance is negative give them the opportunity to stop the transaction. End the code if they try,
+        # or allow them to try entering a new amount if they say no until they enter a valid amount.
         while new_balance < 0:
             print('NOTE! You are trying to withdraw more money than you have! Your new balance would be {}'.format(new_balance))
             decision = input('Would you like to continue? (y/n) ')
@@ -122,24 +131,29 @@ def withdraw_money(account_balance):
             else:
                 print('This is not a valid input. Ending transaction.')
                 raise ValueError
+
+    # End the code if there's an exception
     except:
         exit()
     else:
+        # Print the new balance
         print('Your new balance is: £' + str(new_balance))
     finally:
+        # Complete the transaction
         print('Your transaction is now complete. Thank you for using this ATM.')
 
+
 def enter_pin(attempt, actual_pin):
+    # Set the balance to 100
     balance = 100
     try:
+        # Try entering the pin numbers until you reach three attempts then stop the code from running
         while attempt < 3:
             pin_code = int(input('Please enter your pin: '))
-            # assert len(pin_code) == 4
 
             if pin_code == actual_pin:
                 print('Pin Correct')
-                hi = 1
-                break
+                break # once the pin is correct
             else:
                 wrong = 'Incorrect Pin. Try again.'
                 print(wrong)
@@ -152,7 +166,7 @@ def enter_pin(attempt, actual_pin):
     except:
         print('You inserted your pin incorrectly too many times. Exiting withdrawal request. Number of attempts = {}'.format(attempt))
 
-# enter_pin(count, real_pin)
+# enter_pin(0, 1234)
 
 # FUNCTIONS FOR TESTING - EXCLUDING USER INPUT
 
@@ -213,35 +227,50 @@ def enter_pin_no_user_input(attempt, actual_pin, pin_code, withdrawal_amount, us
     finally:
         return response
 
-# def enter_pin_predefined(actual_pin, pin_code):
-#     attempt = 0
-#     balance = 100
-#     try:
 
-#             if i == actual_pin:
-#                 print('Pin Correct')
-#                 break
-#             else:
-#                 wrong = 'Incorrect Pin. Try again.'
-#                 print(wrong)
-#                 attempt += 1
-#
-#             if attempt >= 3:
-#                 raise ValueError
-#                 break
-#
-#     except ValueError:
-#         response = 'You inserted your pin incorrectly too many times. Exiting withdrawal request. Number of attempts = {}'.format(attempt)
-#         print(response)
-#         return response
-#     else:
-#         withdraw_money(balance)
-#
-#     finally:
-#         pass
-#
-#
-# pins = [1432, 1432, 1234]
+import unittest
+
+# TASK 3: Testing
+
+"""
+Question 1
+Use the Simple ATM program to write unit tests for your functions.
+You are allowed to re-factor your function to ‘untangle’ some logic into smaller blocks of 
+code to make it easier to write tests.
+Try to write at least 5 unit tests in total covering various cases. 
+"""
+
+from Week_4_homework_SO import enter_pin_no_user_input, withdraw_money_no_user_input
 
 
-# enter_pin_predefined(1234, pins)
+class TestATMFunction(unittest.TestCase):
+
+    # Testing the same incorrect pin
+    def test_wrong_pin_three_times(self):
+        pins = [1432, 1432, 1432]
+        expected = 'You inserted your pin incorrectly too many times. Exiting withdrawal request. Number of attempts = 3'
+        result = enter_pin_no_user_input(attempt=0, actual_pin=1321, pin_code=pins, withdrawal_amount=0, user_decision='n')
+        self.assertEqual(expected, result)
+
+    def test_not_y_or_n(self):
+        expected = 'Your transaction is now complete. Thank you for using this ATM. exception'
+        result = withdraw_money_no_user_input(account_balance=100, amount=120, decision='y', amount2=0)
+        self.assertEqual(expected, result)
+
+    def test_trying_to_withdraw_too_much_and_continuing(self):
+        expected = 'Your transaction is now complete. Thank you for using this ATM. exception'
+        result = withdraw_money_no_user_input(account_balance=100, amount=120, decision='y', amount2=0)
+        self.assertEqual(expected, result)
+
+    def test_wrong_withdrawal_right(self):
+        expected = 'Your transaction is now complete. Thank you for using this ATM.'
+        result = withdraw_money_no_user_input(account_balance=100, amount=120, decision='n', amount2=50)
+        self.assertEqual(expected, result)
+
+    def test_everything_input_correctly(self):
+        expected = 'Your transaction is now complete. Thank you for using this ATM.'
+        result = enter_pin_no_user_input(attempt=0, actual_pin=1234, pin_code=[1234], withdrawal_amount=50, user_decision='n')
+        self.assertEqual(expected, result)
+
+if __name__ == '__main__':
+    unittest.main()
