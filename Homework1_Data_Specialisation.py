@@ -10,15 +10,17 @@ import matplotlib.pyplot as plt
 (symbol 'GOOG'), for the period 1 Jan 2020 to 1 Jan 2021
 """
 
-api_token = '1c0af2df7ce543a90a6d13c2b6b4f87a659f496b'
+api_token = '1c0af2df7ce543a90a6d13c2b6b4f87a659f496b'  # Replace with your own token
 
+# Set start and end dates for data collection
 startDate = '2020-01-01'
 endDate = '2021-01-01'
 
+# Access the data between the start and end dates on the Google endpoint using the api token provided
 dataframe = pdr.tiingo.TiingoDailyReader('GOOG', start=startDate, end = endDate, api_key=api_token)
 
+# Read the data frame
 google_stock_df = dataframe.read()
-# print(google_stock_df)
 
 
 """
@@ -37,6 +39,7 @@ saved_csv = pd.read_csv('google_stock_prices_2020', header=0, index_col='date', 
 """
 4. Plot a simple diagram to display closing prices for GOOG stock
 """
+
 plt.figure(1)
 plt.plot(saved_csv['close'])
 plt.title('Closing Stock Price of Google in 2020')
