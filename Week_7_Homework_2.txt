@@ -1,0 +1,43 @@
+HOMEWORK WEEK2
+
+This week’s homework will be purely Project based. You need to work as a group and the homework 
+will be submitted by one of the members of your group. List the other members of your group in the 
+document, so that your instructor can mark every student. 
+
+Group Members: Sophie Owen
+
+
+1. Your group needs to decide what kind of project you are going to work on and lock in your 
+decision. 
+Agriculture - How weather affects soil moisture and how that links to crop growth
+
+2. You need to submit a free style paper that describes your project on a high level. Please 
+cover the following questions:
+1. What kind of data research and analysis are you going to take on?
+I am going to gather data from APIs relating to my topic. I would like to explore the links between weather
+patterns and crop growth, and soil moisture levels to analyse the effects of weather on these.
+As an additional step for the project I would like to use this data to then create recommendations on when
+to water crops. This will be based on weather forecasts, soil moisture data, and the collected data links between
+soil moisture and highest levels of crop growth. 
+
+2. What industry or areas does it cover?
+Agriculture, Environment, potentially Government and Finance
+
+3. What questions are you planning to answer?
+- What are the links between weather i.e. rainfall, sun, cloud cover and more, on agricultural factors
+such as soil moisture, levels of nitrate and other nutrients in the soil, and crop growth?
+- What weather causes the highest increase in income from agriculture? And what are the crops to  
+
+4. What data sources are you planning to use?
+APIs: Storm which includes weather and soil data, METOffice potentially for double checking weather data
+The Government Website also has APIs on crop growth although there are likely more APIs that have more 
+detailed data on regional crop growth.
+
+5. Describe the team approach to the project work: how are you planning to distribute the 
+workload, how are you managing your code, how are you planning to work on your 
+project?
+Splitting it into stages. Task 1 will be to collect data from the APIs and present the data visually to
+disover links. The next stages will get more complex and eventually lead to machine learning. 
+I will manage my code through github, creating branches within a coursework repository. I will make sure to save 
+each stage of the project as it's own commit. I will create tests throughout the project to check the code
+runs as it should, and ensure that any changes I make still result in passing these tests. 
